@@ -53,6 +53,7 @@
             android:layout_margin="10dp"
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
+            android:onClick="creaClk"
             />
 
         <Button
@@ -64,15 +65,18 @@
             android:layout_margin="10dp"
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
+            android:onClick="partecipaClk"
         />
 
 
-    </LinearLayout>
 
+
+
+    </LinearLayout>
     <com.google.android.material.navigation.NavigationView
-    android:id="@+id/navigation"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="left"
-    app:menu="@menu/menu_drawer" />
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        app:menu="@menu/menu_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>

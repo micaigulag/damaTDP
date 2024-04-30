@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dama"
         tools:targetApi="31">
+
+        <activity android:name=".crea"></activity>
+
+        <activity android:name=".partecipa"></activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

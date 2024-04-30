@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity
         if ( item.getItemId() == android.R.id.home ) {
             drawerLayout.openDrawer(Gravity.LEFT);
         }
+
         return true;
     }
 
@@ -66,5 +68,16 @@ public class MainActivity extends AppCompatActivity
 
         return true;
     }
+
+    public void creaClk(View v) {
+        Intent intent = new Intent(this, crea.class);
+        startActivity(intent);
+    }
+
+    public void partecipaClk(View v) {
+        Intent intent = new Intent(this, partecipa.class);
+        startActivity(intent);
+    }
+
 
 }
