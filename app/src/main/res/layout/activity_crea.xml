@@ -58,12 +58,6 @@
         android:textColor="@color/black"
         />
 
-
-
-
-
-
-
 </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation"

@@ -67,10 +67,16 @@
             android:textColor="@color/black"
             android:onClick="partecipaClk"
         />
-
-
-
-
+        <Button
+            android:theme="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Campo Gioco"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:onClick="creaCampoPartita" />
 
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView

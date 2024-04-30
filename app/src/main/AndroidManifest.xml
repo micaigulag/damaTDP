@@ -17,6 +17,8 @@
 
         <activity android:name=".partecipa"></activity>
 
+        <activity android:name=".gameActivity"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

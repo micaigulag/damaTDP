@@ -78,6 +78,10 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, partecipa.class);
         startActivity(intent);
     }
+    public void creaCampoPartita(View v) {
+        Intent intent = new Intent(this, gameActivity.class);
+        startActivity(intent);
+    }
 
 
 }
