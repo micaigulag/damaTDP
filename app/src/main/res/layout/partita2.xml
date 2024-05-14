@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/wood_planks"
+    android:layout_gravity="center_horizontal"
     >
 
     <TextView
