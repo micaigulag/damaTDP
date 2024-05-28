@@ -14,5 +14,6 @@ public class gameActivity extends AppCompatActivity  {
         setContentView(R.layout.partita2);
         campo = (campoDiGioco) findViewById(R.id.GameField);
         campo.settingTextView( (TextView)findViewById(R.id.messaggiDiGioco) );
+        campo.settingMessageView( (TextView)findViewById(R.id.indicatoreTurni) );
     }
 }

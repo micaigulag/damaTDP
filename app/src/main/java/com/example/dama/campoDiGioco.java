@@ -19,6 +19,7 @@ public class campoDiGioco extends View {
     private int counter;
 
     private TextView testoGioco;
+    private TextView turnoGioco;
     private int[][] matriceCampo = {
                                 {0,1,0,1,0,1,0,1},
                                 {1,0,1,0,1,0,1,0},
@@ -118,7 +119,9 @@ public class campoDiGioco extends View {
     public void settingTextView(TextView v){
         this.testoGioco = v;
     }
-
+    public void settingMessageView(TextView v){
+        this.turnoGioco = v;
+    }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // recupero le coordinate del "tocco"
@@ -157,20 +160,25 @@ public class campoDiGioco extends View {
                     case 1:
                             if(matriceCampo[currentY][currentX] == 0){
                                 if(isValidMove(matriceCampo[this.y][this.x],this.x,this.y,currentX,currentY)){
+                                    turnoGioco.setText("Turno pedine nere");
                                     counter++;
+                                    //Gestione della promozione e spostamento
+                                    matriceCampo[currentY][currentX] = (currentY == 7)? 3 : matriceCampo[this.y][this.x];
                                     matriceCampo[this.y][this.x] = 0;
-                                    matriceCampo[currentY][currentX] = 1;
-                                    if(currentY - this.y == 2 && currentX - this.x == -2)
-                                        matriceCampo[currentY-1][currentX-1] = 0;
+                                    if(Math.abs(currentY - this.y) == 2 && (currentX - this.x == -2 || currentX - this.x == 2 ) )
+                                        matriceCampo[(currentY+this.y)/2][(currentX+this.x)/2] = 0;
                                 }else{
                                     testoGioco.setText("Mossa non valida!");
                                 }
+                            }else if(matriceCampo[currentY][currentX]%2 == 1){
+                                this.x = currentX;
+                                this.y = currentY;
                             }else{
                                 testoGioco.setText("Selezionare una cella libera!");
                             }
                             break;
                     case 2:
-                            if(matriceCampo[currentY][currentX]%2 == 0){
+                            if(matriceCampo[currentY][currentX] == 2 || matriceCampo[currentY][currentX] == 4){
                                 counter++;
                                 this.x = currentX;
                                 this.y = currentY;
@@ -184,13 +192,19 @@ public class campoDiGioco extends View {
                             if(matriceCampo[currentY][currentX] == 0){
                                 if(isValidMove(matriceCampo[this.y][this.x],this.x,this.y,currentX,currentY)){
                                     counter = 0;
+                                    turnoGioco.setText("Turno pedine bianche");
+
+                                    //Gestione della promozione e spostamento
+                                    matriceCampo[currentY][currentX] = (currentY == 0)? 4 : matriceCampo[this.y][this.x];
                                     matriceCampo[this.y][this.x] = 0;
-                                    matriceCampo[currentY][currentX] = 2;
-                                    if(currentY - this.y == -2 && currentX - this.x == 2  )
-                                        matriceCampo[currentY+1][currentX+1] = 0;
+                                    if(Math.abs(currentY - this.y) == 2 && (currentX - this.x == 2 || currentX - this.x == -2 ) )
+                                        matriceCampo[(currentY+this.y)/2][(currentX+this.x)/2] = 0;
                                 }else{
                                     testoGioco.setText("Mossa non valida!");
                                 }
+                            }else if(matriceCampo[currentY][currentX] == 2 || matriceCampo[currentY][currentX] == 4 ){
+                                this.x = currentX;
+                                this.y = currentY;
                             }else{
                                 testoGioco.setText("Selezionare una cella libera!");
                             }
@@ -208,14 +222,14 @@ public class campoDiGioco extends View {
     }
 
     private boolean isValidMove(int type,int x,int y, int x2,int y2){
-        if(x2 < 0 || y2 < 0)
+        if(x2 < 0 || y2 < 0  || x2 > 7 || y2 >7 )
             return false;
         switch(type){
             case 1:
                 if(y2-y == 1 && Math.abs(x2-x) == 1 && matriceCampo[y2][x2] == 0 ){
                     return true;
                 }
-                if(y2-y == 2 &&  Math.abs(x2-x) == 2 && matriceCampo[y2][x2] == 0 && matriceCampo[y2-1][x2-1] == 2){
+                if(y2-y == 2 &&  Math.abs(x2-x) == 2 && matriceCampo[y2][x2] == 0 && matriceCampo[(y2+y)/2][(x2+x)/2] == 2){
                     return true;
                 }
                 return false;
@@ -223,15 +237,26 @@ public class campoDiGioco extends View {
                 if(y2-y == -1 && Math.abs(x2-x) == 1 && matriceCampo[y2][x2] == 0 ){
                     return true;
                 }
-                if(y2-y == -2 &&  Math.abs(x2-x) == 2 && matriceCampo[y2][x2] == 0 && matriceCampo[y2+1][x2+1] == 1){
+                if(y2-y == -2 &&  Math.abs(x2-x) == 2 && matriceCampo[y2][x2] == 0 && matriceCampo[(y2+y)/2][(x2+x)/2] == 1){
                     return true;
                 }
                 return false;
             case 3:
-                //return true;
-                //break;
+                if(Math.abs(y2-y) == 1 && Math.abs(x2-x) == 1 && matriceCampo[y2][x2] == 0 ){
+                    return true;
+                }
+                if(Math.abs(y2-y)== 2 &&  Math.abs(x2-x) == 2 && matriceCampo[y2][x2] == 0 && (matriceCampo[(y2+y)/2][(x2+x)/2] == 2 || matriceCampo[(y2+y)/2][(x2+x)/2] == 4 )){
+                    return true;
+                }
+                return false;
             case 4:
-                return true;
+                if(Math.abs(y2-y) == 1 && Math.abs(x2-x) == 1 && matriceCampo[y2][x2] == 0 ){
+                    return true;
+                }
+                if(Math.abs(y2-y) == 2 &&  Math.abs(x2-x) == 2 && matriceCampo[y2][x2] == 0 && (matriceCampo[(y2+y)/2][(x2+x)/2] == 1 || matriceCampo[(y2+y)/2][(x2+x)/2] == 3 )){
+                    return true;
+                }
+                return false;
         }
         return false;
     }

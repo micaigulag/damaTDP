@@ -27,8 +27,18 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_gravity="center"
-        >
-    </com.example.dama.campoDiGioco>
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Turno pedine bianche"
+        android:layout_weight="0"
+        android:padding="10dp"
+        android:id="@+id/indicatoreTurni"
+        android:textColor="@color/black"
+        android:background="#AFFFFFFF"
+        android:layout_marginTop="100dp"
+        />
 
 
 </LinearLayout>
