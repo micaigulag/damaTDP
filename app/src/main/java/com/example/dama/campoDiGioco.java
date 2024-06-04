@@ -18,6 +18,7 @@ public class campoDiGioco extends View {
     //private int ruoloGioco = 0;
     private int counter;
 
+    private boolean isFinita = false;
     private TextView testoGioco;
     private TextView turnoGioco;
     private int[][] matriceCampo = {
@@ -145,8 +146,9 @@ public class campoDiGioco extends View {
 
                 Log.d("Dama","Coordinate: x: " + currentX + ", y: "+currentY);
 
-                switch(counter){
-                    case 0:
+                if(!isFinita){
+                    switch(counter){
+                        case 0:
                             if(matriceCampo[currentY][currentX]%2 == 1){
                                 counter++;
                                 this.x = currentX;
@@ -157,7 +159,7 @@ public class campoDiGioco extends View {
                                 testoGioco.setText("Selezionare prima una pedina");
                             }
                             break;
-                    case 1:
+                        case 1:
                             if(matriceCampo[currentY][currentX] == 0){
                                 if(isValidMove(matriceCampo[this.y][this.x],this.x,this.y,currentX,currentY)){
                                     turnoGioco.setText("Turno pedine nere");
@@ -165,8 +167,15 @@ public class campoDiGioco extends View {
                                     //Gestione della promozione e spostamento
                                     matriceCampo[currentY][currentX] = (currentY == 7)? 3 : matriceCampo[this.y][this.x];
                                     matriceCampo[this.y][this.x] = 0;
-                                    if(Math.abs(currentY - this.y) == 2 && (currentX - this.x == -2 || currentX - this.x == 2 ) )
+                                    if(Math.abs(currentY - this.y) == 2 && (currentX - this.x == -2 || currentX - this.x == 2 ) ){
                                         matriceCampo[(currentY+this.y)/2][(currentX+this.x)/2] = 0;
+                                        this.x = currentX;
+                                        this.y = currentY;
+                                        if(canStillEating(matriceCampo[this.y][this.x], this.x,this.y) ){
+                                            counter = 4;
+                                            testoGioco.setText("Devi mangiare ancora");
+                                        }
+                                    }
                                 }else{
                                     testoGioco.setText("Mossa non valida!");
                                 }
@@ -177,7 +186,7 @@ public class campoDiGioco extends View {
                                 testoGioco.setText("Selezionare una cella libera!");
                             }
                             break;
-                    case 2:
+                        case 2:
                             if(matriceCampo[currentY][currentX] == 2 || matriceCampo[currentY][currentX] == 4){
                                 counter++;
                                 this.x = currentX;
@@ -188,17 +197,24 @@ public class campoDiGioco extends View {
                                 testoGioco.setText("Selezionare prima una pedina");
                             }
                             break;
-                    case 3:
+                        case 3:
                             if(matriceCampo[currentY][currentX] == 0){
-                                if(isValidMove(matriceCampo[this.y][this.x],this.x,this.y,currentX,currentY)){
+                                if(isValidMove(matriceCampo[this.y][this.x],this.x,this.y,currentX,currentY)) {
                                     counter = 0;
                                     turnoGioco.setText("Turno pedine bianche");
 
                                     //Gestione della promozione e spostamento
-                                    matriceCampo[currentY][currentX] = (currentY == 0)? 4 : matriceCampo[this.y][this.x];
+                                    matriceCampo[currentY][currentX] = (currentY == 0) ? 4 : matriceCampo[this.y][this.x];
                                     matriceCampo[this.y][this.x] = 0;
-                                    if(Math.abs(currentY - this.y) == 2 && (currentX - this.x == 2 || currentX - this.x == -2 ) )
-                                        matriceCampo[(currentY+this.y)/2][(currentX+this.x)/2] = 0;
+                                    if (Math.abs(currentY - this.y) == 2 && (currentX - this.x == 2 || currentX - this.x == -2)){
+                                        matriceCampo[(currentY + this.y) / 2][(currentX + this.x) / 2] = 0;
+                                        this.x = currentX;
+                                        this.y = currentY;
+                                        if (canStillEating(matriceCampo[this.y][this.x], this.x, this.y)) {
+                                            counter = 4;
+                                            testoGioco.setText("Devi mangiare ancora");
+                                        }
+                                    }
                                 }else{
                                     testoGioco.setText("Mossa non valida!");
                                 }
@@ -209,6 +225,38 @@ public class campoDiGioco extends View {
                                 testoGioco.setText("Selezionare una cella libera!");
                             }
                             break;
+                        case 4:
+                            //mangiare in catena non fa parte del turno normale
+                            if(isValidMove(matriceCampo[y][x],x,y,currentX,currentY)) {
+                                if (isMangiabile(matriceCampo[y][x], (currentX + x) / 2, (currentY + y) / 2)) {
+                                    matriceCampo[(currentY + y) / 2][(currentX + x)/2] =0;
+
+                                    //Effettuo lo spostamento e possibile upgrade
+                                    if( currentY == 7 && matriceCampo[y][x] == 1)
+                                        matriceCampo[currentY][currentX] = 3;
+                                    else if (currentY == 0 && matriceCampo[y][x] == 2)
+                                        matriceCampo[currentY][currentX] = 4;
+                                    else
+                                        matriceCampo[currentY][currentX] = matriceCampo[y][x];
+
+                                    matriceCampo[y][x] = 0;  //Elimino nel posto vecchio
+
+                                    this.x = currentX;
+                                    this.y = currentY;
+
+                                    if( !canStillEating(matriceCampo[y][x],x,y) ){
+                                        if(matriceCampo[y][x] == 1 || matriceCampo[y][x] == 3 ){
+                                            counter = 2;
+                                        }else{
+                                            counter = 0;
+                                        }
+                                    }
+                                } else {
+                                    testoGioco.setText("Seleziona la giusta pedina da mangiare!");
+                                }
+                            }
+                            break;
+                    }
                 }
                 invalidate();
                 return true;
@@ -219,6 +267,54 @@ public class campoDiGioco extends View {
             default:
                 return super.onTouchEvent(event);
         }
+    }
+
+
+    private boolean canStillEating (int type,int x,int y) {
+        if(isMangiabile(type,x-1,y-1))
+            return isValidMove(type,x, y,x-2,y-2);
+        else if(isMangiabile(type,x-1,y+1))
+            return isValidMove(type,x, y,x-2,y+2);
+        else if(isMangiabile(type,x+1,y-1))
+            return isValidMove(type,x, y,x+2,y-2);
+        else{
+            if(isMangiabile(type,x+1,y+1)){
+                return isValidMove(type,x, y,x+2,y+2);
+            }
+            return false;
+        }
+    }
+
+    private boolean isMangiabile(int type,int x,int y){
+        int tempType;
+        try {
+            tempType = matriceCampo[y][x];
+        }catch(Exception e){
+            return false;
+        }
+        switch(type){
+            case 1:
+                if(tempType == 2)
+                    return true;
+                else
+                    return false;
+            case 2:
+                if(tempType == 1)
+                    return true;
+                else
+                    return false;
+            case 3:
+                if(tempType == 2 || tempType == 4)
+                    return true;
+                else
+                    return false;
+            case 4:
+                if(tempType == 1 || tempType == 3)
+                    return true;
+                else
+                    return false;
+        }
+        return false;
     }
 
     private boolean isValidMove(int type,int x,int y, int x2,int y2){
@@ -259,5 +355,23 @@ public class campoDiGioco extends View {
                 return false;
         }
         return false;
+    }
+    private void isFinished() {
+        int pBianche = 0;
+        int pNere = 0;
+
+        for(int i=0; i < 8; i++){
+            for(int j=0; j < 8; j++){
+                if( matriceCampo[x][y] != 0 && matriceCampo[x][y] % 2 == 0 )
+                    pNere++;
+                else if(matriceCampo[x][y] != 0 && matriceCampo[x][y] % 2 == 1)
+                    pBianche++;
+            }
+        }
+        if(pNere == 0){
+            isFinita = true;
+        }else if(pBianche == 0){
+            isFinita = true;
+        }
     }
 }

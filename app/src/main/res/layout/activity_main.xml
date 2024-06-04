@@ -71,7 +71,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Campo Gioco"
+            android:text="Gioca in locale"
             android:layout_margin="10dp"
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
