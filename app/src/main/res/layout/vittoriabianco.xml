@@ -16,7 +16,7 @@
         android:background="@drawable/legn"
         tools:context=".MainActivity"
         android:padding="10dp"
-    >
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -27,32 +27,21 @@
             android:layout_gravity="center_horizontal"
             />
 
-    <ImageView
-        android:layout_width="250dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:src="@drawable/dams"
-        android:adjustViewBounds="true"
-        />
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/bianco"
+            android:adjustViewBounds="true"
+            />
 
         <ImageView
-            android:layout_width="200dp"
+            android:layout_width="400dp"
             android:layout_height="200dp"
-            android:src="@drawable/scach2"
+            android:src="@drawable/vittoria"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
-            />
-
-        <!--<Button
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Crea Una Partita"
-            android:layout_margin="10dp"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/black"
-            android:onClick="creaClk"
             />
 
         <Button
@@ -60,24 +49,11 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Partecipa Alla Partita"
+            android:text="Torna Al Menu"
             android:layout_margin="10dp"
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
-            android:onClick="partecipaClk"
-        /> -->
-        <Button
-            android:theme="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="GIOCA"
-            android:layout_margin="10dp"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/black"
-            android:onClick="creaCampoPartita" />
-
-
+            android:onClick="MainActivity" />
 
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,7 +14,7 @@ import android.view.View;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity
+public class vittoriabianco extends AppCompatActivity
         implements  NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.vittorianero);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         NavigationView nav = findViewById(R.id.navigation);
@@ -43,8 +44,6 @@ public class MainActivity extends AppCompatActivity
 
         if ( item.getItemId() == android.R.id.home ) {
             drawerLayout.openDrawer(Gravity.LEFT);
-        } else if (item.getItemId() == R.id.settings) {
-            startActivity( new Intent(this, settings.class));
         }
 
         return true;
@@ -53,33 +52,29 @@ public class MainActivity extends AppCompatActivity
     // risposta ai clic sul drawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-
-
-        if(menuItem.getItemId() == R.id.info){
-            startActivity(new Intent(this, info.class));
-
-        }
+       /*  trasfore in if
+        switch (menuItem.getItemId()) {
+            case R.id.area1:
+                startActivity( new Intent(this,Activity2.class));
+                break;
+            case R.id.area2:
+                startActivity( new Intent(this,Activity2.class));
+                break;
+            case R.id.area3:
+                startActivity( new Intent(this,Activity2.class));
+                break;
+        }*/
 
 
         return true;
     }
 
-    public void creaClk(View v) {
-        Intent intent = new Intent(this, crea.class);
+    public void mainpage(View v) {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
-    public void partecipaClk(View v) {
-        Intent intent = new Intent(this, partecipa.class);
-        startActivity(intent);
-    }
-    public void creaCampoPartita(View v) {
-        Intent intent = new Intent(this, gameActivity.class);
-        startActivity(intent);
-    }
-
 
 
 
 }
+
