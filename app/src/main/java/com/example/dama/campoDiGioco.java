@@ -4,11 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -69,7 +66,7 @@ public class campoDiGioco extends View {
         nera = BitmapFactory.decodeResource(getResources(), R.drawable.nero);
         nera = Bitmap.createScaledBitmap(nera, DIM_LATO-5, DIM_LATO-5, false);
 
-        damaBianca = BitmapFactory.decodeResource(getResources(), R.drawable.damonebianco);
+        damaBianca = BitmapFactory.decodeResource(getResources(), R.drawable.dbianco);
         damaBianca = Bitmap.createScaledBitmap(damaBianca, DIM_LATO-5, DIM_LATO-5, false);
 
         damaNera = BitmapFactory.decodeResource(getResources(), R.drawable.damonenero);
